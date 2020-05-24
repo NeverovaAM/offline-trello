@@ -1,0 +1,16 @@
+@import '../../../styles/variables.scss';
+
+.card-common {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 3px $light-grey;
+    display: flex;
+    flex-wrap: wrap;
+
+    .menu-container {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 10px;
+    }
+}

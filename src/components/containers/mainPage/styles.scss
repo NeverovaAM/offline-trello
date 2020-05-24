@@ -1,0 +1,57 @@
+@import "../../../styles/variables.scss";
+
+.main-page {
+  width: 700px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  height: 100vh;
+  box-shadow: 0 0 2px 2px $light-grey;
+
+  &_header {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 2px;
+
+    &_heading {
+      color: $dark-grey;
+      font-size: 1.5rem;
+    }
+  }
+
+  &_button {
+    height: 40px;
+    width: 100%;
+  }
+
+  .board-cards-container {
+    width: 100%;
+    padding: 20px 15px;
+    max-height: 600px;
+    min-height: 600px;
+    box-sizing: border-box;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    background-color: #e5e7e8;
+    flex-wrap: wrap;
+    display: flex;
+  }
+  
+  .board-cards {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+    overflow-y: auto;
+    max-height: 430px;
+    min-height: 430px;
+    align-content: flex-start;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+}
+

@@ -1,0 +1,23 @@
+@import '../../../styles/variables.scss';
+
+.button-common {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    color: $dark-grey;
+    background-color: $pale-turquoise;
+    outline: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $turquoise;
+        outline: none;
+    }
+
+    &:active {
+        background-color: $dark-turquoise;
+        outline: none;
+    }
+}

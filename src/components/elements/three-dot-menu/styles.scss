@@ -1,0 +1,62 @@
+@import "../../../styles/variables.scss";
+
+.three-dot-menu {
+  position: relative;
+
+  &_button {
+    width: 25px;
+    height: 25px;
+    border: 1px solid $dark-grey;
+    border-radius: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+
+    &::before {
+      display: block;
+      content: "...";
+      font-size: 1.2rem;
+      font-weight: bold;
+      width: 25px;
+      height: 5px;
+      position: relative;
+      bottom: 14px;
+    }
+
+    &:hover, &:active {
+      box-shadow: 0 0 2px 2px $dark-grey;
+      outline: none;
+    }
+  }
+
+  &_items {
+    position: absolute;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 5px 2px $light-grey;
+    top: 29px;
+    right: -50px;
+    border-radius: 5px;
+
+    &_item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 30px;
+      color: $dark-grey;
+      padding: 5px 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+
+      &:hover {
+        background-color: $light-grey;
+      }
+    }
+
+    &_item:first-child {
+      border: none;
+    }
+  }
+}

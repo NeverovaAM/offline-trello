@@ -1,0 +1,39 @@
+@import '../../../styles/variables.scss';
+
+.column-common {
+    width: 320px;
+    padding: 20px 10px;
+    overflow-y: auto;
+    max-height: 500px;
+    background-color: $gainsboro;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    &_heading {
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+
+        &_menu-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 10px;
+            width: 100%;
+        }
+
+        &_text {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    }
+
+    &_cards-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px;
+    }
+}
