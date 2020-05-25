@@ -3,9 +3,7 @@ import { CardType, ColumnType } from "../../../models";
 import Card from "../card";
 import Button from "../button";
 import Dialog from "../dialog";
-import ThreeDotMenu from "../three-dot-menu";
 import InputText from "../inputText";
-import { THREE_DOT_MENU_ITEMS } from "../../../constants";
 import { connect } from "react-redux";
 import {
   addCard,
@@ -18,8 +16,9 @@ import {
   DeleteColumnActionType,
 } from "../../../redux/basic/actions/actionTypes";
 import "./styles.scss";
-import { getCardsForColumn, getCurrentColumns } from "../../../selectors";
+import { getCardsForColumn } from "../../../selectors";
 import { FullStateType } from "../../../redux/store";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 type PropType = {
   cards: CardType[];
@@ -30,7 +29,7 @@ type PropType = {
 };
 
 const Column: React.FC<PropType> = (props) => {
-  const { id, title, boardId } = props.column;
+  const { id, title } = props.column;
   const { cards, addCard, renameColumn, deleteColumn } = props;
 
   const [inputValue, setInputValue] = useState("");
@@ -81,63 +80,82 @@ const Column: React.FC<PropType> = (props) => {
     deleteColumn(id);
   };
 
-  const handleColumnMenuClick = (item: string) => {
-    switch (item) {
-      case THREE_DOT_MENU_ITEMS[0]:
-        setRenaming(true);
-        break;
-
-      case THREE_DOT_MENU_ITEMS[1]:
-        deleteColumn(id);
-        break;
-
-      default:
-        break;
-    }
-  };
-
   return (
-    <div className="column-common">
-      <div className="column-common_heading">
-        <div className="column-common_heading_title">
-          {renaming ? (
-            <InputText
-              placeholder="Введите название колонки"
-              handleInput={handleRenameInput}
-              handleEnter={() => setRenaming(false)}
-              value={title}
-            ></InputText>
-          ) : (
-            <div className="column-common_heading_text">{title}</div>
-          )}
-        </div>
-        <div className="column-common_heading_buttons">
-          <Button text="Переименовать" handleClick={handleRenameClick}></Button>
-          <Button text="Удалить" handleClick={handleDeleteClick}></Button>
-        </div>
-      </div>
-      <Dialog
-        placeholder="Введите название карточки"
-        inputValue={inputValue}
-        handleInput={handleInput}
-        handleSetClick={closeAndSet}
-        handleCancelClick={closeDialog}
-        handleEnter={handleEnter}
-        className={dialogClassName}
-      ></Dialog>
-      <div className="column-common_cards-container">
-        <div className="column-common_button-container">
-          <Button text="Создать Карточку" handleClick={handleClick}></Button>
-        </div>
-        {cards.length ? (
-          cards.map((c) => <Card key={c.id} card={c}></Card>)
-        ) : (
-          <div className="column-common_no-cards">
-            Нажмите "Создать Карточку"
+    <Droppable droppableId={String(id)}>
+      {(provided: any) => {
+        return (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="column-common"
+          >
+            <div className="column-common_heading">
+              <div className="column-common_heading_title">
+                {renaming ? (
+                  <InputText
+                    placeholder="Введите название колонки"
+                    handleInput={handleRenameInput}
+                    handleEnter={() => setRenaming(false)}
+                    value={title}
+                  ></InputText>
+                ) : (
+                  <div className="column-common_heading_text">{title}</div>
+                )}
+              </div>
+              <div className="column-common_heading_buttons">
+                <Button
+                  text="Переименовать"
+                  handleClick={handleRenameClick}
+                ></Button>
+                <Button text="Удалить" handleClick={handleDeleteClick}></Button>
+              </div>
+            </div>
+            <Dialog
+              placeholder="Введите название карточки"
+              inputValue={inputValue}
+              handleInput={handleInput}
+              handleSetClick={closeAndSet}
+              handleCancelClick={closeDialog}
+              handleEnter={handleEnter}
+              className={dialogClassName}
+            ></Dialog>
+            <div className="column-common_cards-container">
+              <div className="column-common_button-container">
+                <Button
+                  text="Создать Карточку"
+                  handleClick={handleClick}
+                ></Button>
+              </div>
+              {cards.length ? (
+                cards.map((c, index) => (
+                  <Draggable
+                    key={c.id}
+                    draggableId={String(c.id)}
+                    index={index}
+                  >
+                    {(provided: any, snapshot) => {
+                      return (
+                        <Card
+                          innerRef={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          card={c}
+                        ></Card>
+                      );
+                    }}
+                  </Draggable>
+                ))
+              ) : (
+                <div className="column-common_no-cards">
+                  Нажмите "Создать Карточку"
+                </div>
+              )}
+            </div>
+            {provided.placeholder}
           </div>
-        )}
-      </div>
-    </div>
+        );
+      }}
+    </Droppable>
   );
 };
 

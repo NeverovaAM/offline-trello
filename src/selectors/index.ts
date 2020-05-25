@@ -1,6 +1,5 @@
 import { createSelector } from "reselect";
 import {
-  InitialStateType,
   ColumnType,
   CardType,
   BoardType,

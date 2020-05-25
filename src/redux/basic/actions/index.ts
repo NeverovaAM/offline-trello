@@ -9,6 +9,7 @@ import {
   ADD_CARD,
   RENAME_CARD,
   DELETE_CARD,
+  MOVE_CARD,
 } from "../types";
 import {
   AddBoardActionType,
@@ -21,6 +22,7 @@ import {
   AddCardActionType,
   RenameCardActionType,
   DeleteCardActionType,
+  MoveCardActionType,
 } from "./actionTypes";
 
 export const addBoard = (title: string): AddBoardActionType => ({
@@ -96,5 +98,14 @@ export const deleteCard = ( id: number ): DeleteCardActionType => ({
   type: DELETE_CARD,
   payload: {
     id
+  }
+})
+
+export const moveCard = (cardId: number, sourceColId: number, targetColId: number): MoveCardActionType => ({
+  type: MOVE_CARD,
+  payload: {
+    cardId,
+    sourceColId,
+    targetColId
   }
 })

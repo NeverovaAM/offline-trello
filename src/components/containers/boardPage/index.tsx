@@ -1,30 +1,37 @@
 import React, { useState } from "react";
 import Button from "../../elements/button";
-import Card from "../../elements/card";
 import Dialog from "../../elements/dialog";
 import Column from "../../elements/column";
 import { ColumnType } from "../../../models";
-import { addColumn } from "../../../redux/basic/actions";
+import { addColumn, moveCard } from "../../../redux/basic/actions";
 import {
   getCurrentColumns,
-  getCardsForColumn,
   getCurrentBoardName,
 } from "../../../selectors";
 import { connect } from "react-redux";
 import { FullStateType } from "../../../redux/store";
-import { AddColumnActionType } from "../../../redux/basic/actions/actionTypes";
+import {
+  AddColumnActionType,
+  MoveCardActionType,
+} from "../../../redux/basic/actions/actionTypes";
 import "./styles.scss";
 import { Link } from "react-router-dom";
+import { DragDropContext } from "react-beautiful-dnd";
 
 type PropType = {
   columns: ColumnType[];
   currentBoard: number;
   boardName: string;
   addColumn: (boardId: number, title: string) => AddColumnActionType;
+  moveCard: (
+    cardId: number,
+    sourceId: number,
+    targetId: number
+  ) => MoveCardActionType;
 };
 
 const BoardPage: React.FC<PropType> = (props) => {
-  const { columns, currentBoard, boardName, addColumn } = props;
+  const { columns, currentBoard, boardName, addColumn, moveCard } = props;
 
   const openDialog = () => {
     const dialog: any = document.querySelector(".create-column-dialog");
@@ -59,11 +66,20 @@ const BoardPage: React.FC<PropType> = (props) => {
     setInputValue(val);
   };
 
+  const onDragEnd = (result: any, columns: any) => {
+    if (result.source.droppableId !== result.destination.droppableId) {
+      const cardId = +result.draggableId;
+      const sourceId = +result.source.droppableId;
+      const targetId = +result.destination.droppableId;
+      moveCard(cardId, sourceId, targetId);
+    }
+  };
+
   return (
     <div className="board-page">
       <div className="board-page_button-container">
         <Link to="/">
-          <Button text="Назад к списку досок" handleClick={()=>{}}></Button>
+          <Button text="Назад к списку досок" handleClick={() => {}}></Button>
         </Link>
       </div>
       <div className="board-page_title">
@@ -81,13 +97,15 @@ const BoardPage: React.FC<PropType> = (props) => {
         handleInput={handleInput}
         className="create-column-dialog"
       ></Dialog>
-      <div className="board-page_columns-container">
-        {columns.length ? (
-          columns.map((col) => <Column key={col.id} column={col}></Column>)
-        ) : (
-          <div>Нажмите "Создать колонку"</div>
-        )}
-      </div>
+      <DragDropContext onDragEnd={(result: any) => onDragEnd(result, columns)}>
+        <div className="board-page_columns-container">
+          {columns.length ? (
+            columns.map((col) => <Column key={col.id} column={col}></Column>)
+          ) : (
+            <div>Нажмите "Создать колонку"</div>
+          )}
+        </div>
+      </DragDropContext>
     </div>
   );
 };
@@ -99,4 +117,5 @@ const mapStateToProps = (state: FullStateType) => ({
 
 export default connect(mapStateToProps, {
   addColumn,
+  moveCard,
 })(BoardPage);

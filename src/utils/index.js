@@ -1,5 +1,3 @@
-import { FullStateType } from "../redux/store"
-
 export const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);

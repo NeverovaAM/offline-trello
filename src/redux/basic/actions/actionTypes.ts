@@ -71,3 +71,12 @@ export type DeleteCardActionType = {
     id: number;
   };
 };
+
+export type MoveCardActionType = {
+  type: string;
+  payload: {
+    cardId: number;
+    sourceColId: number;
+    targetColId: number;
+  };
+};

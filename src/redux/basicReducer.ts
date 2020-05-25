@@ -10,6 +10,7 @@ import {
   ADD_CARD,
   RENAME_CARD,
   DELETE_CARD,
+  MOVE_CARD,
 } from "./basic/types";
 import concat from "lodash/concat";
 import filter from "lodash/filter";
@@ -147,6 +148,23 @@ export const basic = (
         ...state,
         cards: filter(state.cards, (card) => card.id !== cardToDelete),
       };
+
+    case MOVE_CARD:
+      const { cardId: cardMovedId, targetColId } = payload
+      const cardItems = [...state.cards]
+      const movedCardIndex = cardItems.findIndex( card => card.id === cardMovedId) 
+      const movedCard = cardItems[movedCardIndex]
+      cardItems[movedCardIndex] = {
+        id: cardMovedId,
+        colId: targetColId,
+        title: movedCard.title,
+        boardId: state.currentBoard
+      }
+
+      return {
+        ...state,
+        cards: cardItems
+      }
 
     default:
       return state;
