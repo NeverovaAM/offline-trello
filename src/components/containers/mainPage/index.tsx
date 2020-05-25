@@ -24,18 +24,18 @@ const MainPage: React.FC<PropType> = (props) => {
   const [inputValue, setInputValue] = useState("");
 
   const openDialog = () => {
-    const dialog: any = document.querySelector(".create-dialog");
+    const dialog: any = document.querySelector(".create-board-dialog");
     dialog.showModal();
   };
 
   const closeDialog = () => {
-    const dialog: any = document.querySelector(".create-dialog");
+    const dialog: any = document.querySelector(".create-board-dialog");
     dialog.close();
   };
 
   const closeAndSet = () => {
     if (inputValue.length > 0) {
-      const dialog: any = document.querySelector(".create-dialog");
+      const dialog: any = document.querySelector(".create-board-dialog");
       dialog.close();
       addBoard(inputValue);
       setInputValue("");
@@ -70,6 +70,7 @@ const MainPage: React.FC<PropType> = (props) => {
           handleSetClick={closeAndSet}
           handleEnter={handleEnter}
           handleInput={handleInput}
+          className="create-board-dialog"
         ></Dialog>
         <div className="board-cards">
           {boards.length ? (

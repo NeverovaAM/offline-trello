@@ -34,7 +34,7 @@
     box-sizing: border-box;
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-    background-color: #e5e7e8;
+    background-color: $background-container;
     flex-wrap: wrap;
     display: flex;
   }

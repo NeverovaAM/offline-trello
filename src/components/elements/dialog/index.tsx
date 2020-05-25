@@ -10,6 +10,7 @@ type PropType = {
   handleEnter: () => void;
   handleSetClick: () => void;
   handleCancelClick: () => void;
+  className: string
 };
 
 const Dialog: React.FC<PropType> = (props) => {
@@ -20,9 +21,12 @@ const Dialog: React.FC<PropType> = (props) => {
     handleCancelClick,
     handleEnter,
     handleSetClick,
+    className
   } = props;
+
+  const classes = `create-dialog ${className}`
   return (
-    <dialog className="create-dialog">
+    <dialog className={classes}>
       <div className="create-dialog_content">
         <InputText
           placeholder={placeholder}

@@ -1,0 +1,44 @@
+@import "../../../styles/variables.scss";
+
+.board-page {
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    overflow-x: auto;
+    height: 100vh;
+    border-left: 1px solid $light-grey;
+    border-right: 1px solid $light-grey;
+
+    &_title {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &_heading {
+            font-size: 2rem;
+            font-weight: 600;
+            color: $dark-grey;
+        }
+    }
+
+    &_button-container {
+        height: 40px;
+        padding: 10px 0 10px 15px;
+    }
+
+    &_columns-container {
+        background-color: $background-container;
+        border-top: 1px solid $light-grey;
+        border-bottom: 1px solid $light-grey;
+        overflow-x: auto;
+        max-width: 1200px;
+        min-width: 1200px;    
+        height: 700px;
+        padding: 15px 15px;
+        box-sizing: border-box;
+        display: flex;
+    }
+}

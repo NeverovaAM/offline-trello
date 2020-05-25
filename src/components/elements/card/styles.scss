@@ -1,12 +1,28 @@
 @import '../../../styles/variables.scss';
 
 .card-common {
-    width: 300px;
-    height: 200px;
+    width: 200px;
+    min-width: 200px;
+    height: 100px;
     border-radius: 10px;
     box-shadow: 0 0 3px 3px $light-grey;
     display: flex;
     flex-wrap: wrap;
+    margin: 10px 0;
+    justify-content: center;
+    background-color: $pale-turquoise;
+
+    &_title-container {
+        height: 60px;
+        display: flex;
+        width: 70%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &_buttons {
+        width: 100%;
+    }
 
     .menu-container {
         display: flex;

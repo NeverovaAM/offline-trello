@@ -13,6 +13,7 @@ import {
 import { connect } from "react-redux";
 import { FullStateType } from "../../../redux/store";
 import { AddColumnActionType } from "../../../redux/basic/actions/actionTypes";
+import "./styles.scss";
 
 type PropType = {
   columns: ColumnType[];
@@ -25,12 +26,12 @@ const BoardPage: React.FC<PropType> = (props) => {
   const { columns, currentBoard, boardName, addColumn } = props;
 
   const openDialog = () => {
-    const dialog: any = document.querySelector(".create-dialog");
+    const dialog: any = document.querySelector(".create-column-dialog");
     dialog.showModal();
   };
 
   const closeDialog = () => {
-    const dialog: any = document.querySelector(".create-dialog");
+    const dialog: any = document.querySelector(".create-column-dialog");
     dialog.close();
   };
 
@@ -38,7 +39,7 @@ const BoardPage: React.FC<PropType> = (props) => {
 
   const closeAndSet = () => {
     if (inputValue.length > 0) {
-      const dialog: any = document.querySelector(".create-dialog");
+      const dialog: any = document.querySelector(".create-column-dialog");
       dialog.close();
       addColumn(currentBoard, inputValue);
       setInputValue("");
@@ -72,6 +73,7 @@ const BoardPage: React.FC<PropType> = (props) => {
         handleSetClick={closeAndSet}
         handleEnter={handleEnter}
         handleInput={handleInput}
+        className="create-column-dialog"
       ></Dialog>
       <div className="board-page_columns-container">
           { columns.length? columns.map( col => (

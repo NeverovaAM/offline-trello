@@ -10,6 +10,7 @@ import {
 } from "../../../redux/basic/actions/actionTypes";
 import { CardType } from "../../../models";
 import ThreeDotMenu from "../three-dot-menu";
+import Button from "../button";
 import { THREE_DOT_MENU_ITEMS } from "../../../constants";
 
 type PropType = {
@@ -31,6 +32,14 @@ const Card: React.FC<PropType> = (props) => {
     renameCard(id, val);
   };
 
+  const handleRenameClick = () => {
+    setRenaming(true);
+  };
+
+  const handleDeleteClick = () => {
+    deleteCard(id);
+  };
+
   const onMenuItemClick = (item: string) => {
     switch (item) {
       case THREE_DOT_MENU_ITEMS[0]: //rename
@@ -44,19 +53,28 @@ const Card: React.FC<PropType> = (props) => {
     }
   };
 
+  const handleEnter = () => {
+    setRenaming(false);
+  };
+
   return (
     <div className={classes}>
-      <div className="menu-container">
-        <ThreeDotMenu
-          handleClick={onMenuItemClick}
-          items={THREE_DOT_MENU_ITEMS}
-        ></ThreeDotMenu>
+      <div className="card-common_title-container">
+        {renaming ? (
+          <InputText
+            value={title}
+            handleEnter={handleEnter}
+            placeholder="Enter name"
+            handleInput={handleInput}
+          />
+        ) : (
+          <div className="card-common_title">{title}</div>
+        )}
       </div>
-      {renaming ? (
-        <InputText placeholder="Enter name" handleInput={handleInput} />
-      ) : (
-        <div>{title}</div>
-      )}
+      <div className="card-common_buttons">
+        <Button text="Переименовать" handleClick={handleRenameClick}></Button>
+        <Button text="Удалить" handleClick={handleDeleteClick}></Button>
+      </div>
     </div>
   );
 };

@@ -51,7 +51,7 @@ export const basic = (
       const index = boardsCopy.findIndex((item) => item.id === id);
       boardsCopy[index] = {
         id,
-        title: newTitle
+        title: newTitle,
       };
       return {
         ...state,
@@ -62,7 +62,7 @@ export const basic = (
       const { id: idToDelete } = payload;
       return {
         ...state,
-        cards: filter(state.cards, (b) => b.boardId !== idToDelete ),
+        cards: filter(state.cards, (b) => b.boardId !== idToDelete),
         boards: filter(state.boards, (b) => b.id !== idToDelete),
         columns: filter(state.columns, (b) => b.boardId !== idToDelete),
       };
@@ -90,7 +90,11 @@ export const basic = (
       const { newTitle: newColTitle, id: colId } = payload;
       const columnsCopy = concat([], state.columns);
       const colIndex = columnsCopy.findIndex((item) => item.id === colId);
-      columnsCopy[colIndex].title = newColTitle;
+      columnsCopy[colIndex] = {
+        title: newColTitle,
+        id: colId,
+        boardId: state.currentBoard,
+      };
 
       return {
         ...state,
@@ -102,12 +106,12 @@ export const basic = (
 
       return {
         ...state,
-        columns: filter(state.columns, { id: colToDelete }),
-        cards: filter(state.cards, { colId: colToDelete }),
+        columns: filter(state.columns, (col) => col.id !== colToDelete),
+        cards: filter(state.cards, (card) => card.colId !== colToDelete),
       };
 
     case ADD_CARD:
-      const { id: cardColId, title: cardTitle } = payload;
+      const { columnId: cardColId, title: cardTitle } = payload;
       const newCard: CardType = {
         id: generateId(),
         colId: cardColId,
@@ -117,14 +121,20 @@ export const basic = (
 
       return {
         ...state,
-        cards: concat(state.cards, newCard),
+        cards: [...state.cards, newCard],
       };
 
     case RENAME_CARD:
       const { id: cardId, newTitle: cardNewTitle } = payload;
       const cardsCopy = concat([], state.cards);
       const cardIndex = cardsCopy.findIndex((item) => item.id === cardId);
-      cardsCopy[cardIndex].title = cardNewTitle;
+      const cardColIndex = cardsCopy[cardIndex].colId;
+      cardsCopy[cardIndex] = {
+        id: cardId,
+        title: cardNewTitle,
+        boardId: state.currentBoard,
+        colId: cardColIndex,
+      };
 
       return {
         ...state,
@@ -135,7 +145,7 @@ export const basic = (
       const { id: cardToDelete } = payload;
       return {
         ...state,
-        cards: filter(state.cards, { id: cardToDelete }),
+        cards: filter(state.cards, (card) => card.id !== cardToDelete),
       };
 
     default:
