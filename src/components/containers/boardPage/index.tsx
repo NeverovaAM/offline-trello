@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { FullStateType } from "../../../redux/store";
 import { AddColumnActionType } from "../../../redux/basic/actions/actionTypes";
 import "./styles.scss";
+import { Link } from "react-router-dom";
 
 type PropType = {
   columns: ColumnType[];
@@ -60,6 +61,11 @@ const BoardPage: React.FC<PropType> = (props) => {
 
   return (
     <div className="board-page">
+      <div className="board-page_button-container">
+        <Link to="/">
+          <Button text="Назад к списку досок" handleClick={()=>{}}></Button>
+        </Link>
+      </div>
       <div className="board-page_title">
         <div className="board-page_title_heading">{boardName}</div>
       </div>
@@ -76,9 +82,11 @@ const BoardPage: React.FC<PropType> = (props) => {
         className="create-column-dialog"
       ></Dialog>
       <div className="board-page_columns-container">
-          { columns.length? columns.map( col => (
-              <Column key={col.id} column={col}></Column>
-          )) : <div>Нажмите "Создать колонку"</div>}
+        {columns.length ? (
+          columns.map((col) => <Column key={col.id} column={col}></Column>)
+        ) : (
+          <div>Нажмите "Создать колонку"</div>
+        )}
       </div>
     </div>
   );
